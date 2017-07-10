@@ -23,6 +23,16 @@ namespace Practice
         public MainWindow()
         {
             InitializeComponent();
+            using (DBContext db = new DBContext())
+            {
+                List<CarMark> list = db.CarMarks.ToList();
+                db.CarMarks.Add(new CarMark() {  Name = "Opel" });
+                db.CarMarks.Add(new CarMark() {  Name = "Ferrari" });
+                db.CarMarks.Add(new CarMark() {  Name = "Lada" });
+                db.CarMarks.Add(new CarMark() {  Name = "Mercedes" });
+                db.SaveChanges();
+            }
+            
         }
 
         private void btnDigram_Click(object sender, RoutedEventArgs e)
