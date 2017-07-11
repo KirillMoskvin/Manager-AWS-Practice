@@ -19,7 +19,7 @@
             <!--Блок сортировки-->
             <TabItem Header="Сортировка">
                 <TabItem.Content>
-                    <Grid ShowGridLines="True">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
@@ -30,9 +30,9 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,10,0,0"><Run Text="Сортировать по:"/></TextBlock>
                         <ComboBox Grid.Row="0" Grid.Column="1" Name = "cbSort" MinHeight="20" MinWidth="125" 
-                                  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                                  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0"/>
                         <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,10,0,0"><Run Text="Способ:" /></TextBlock>
-                        <ComboBox Grid.Row="1" Grid.Column="1" Name = "cbOrder" MinHeight="20" MinWidth="125" Margin="10,10,0,0"
+                        <ComboBox Grid.Row="1" Grid.Column="1" Name = "cbOrder" MinHeight="20" MinWidth="125" Margin="0,10,0,0"
                                   SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <TextBlock>По возрастанию</TextBlock>
                             <TextBlock>По убыванию</TextBlock>
@@ -64,7 +64,7 @@
             <!--Блок поиска-->
             <TabItem Header="Поиск">
                 <TabItem.Content>
-                    <Grid ShowGridLines="True">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
@@ -84,7 +84,22 @@
             </TabItem>
         </TabControl>
         <!--Отображение таблицы -->
-        <DataGrid Grid.Row="1" Grid.Column="0" AutoGenerateColumns="True"></DataGrid>
+        <DataGrid Grid.Row="1" Grid.Column="0" AutoGenerateColumns="False" x:Name="grOrders" ItemsSource="{Binding Orders}"
+                  IsReadOnly="True" Focusable="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="0.1*" Binding="{Binding Path=OrderId}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Марка" Width="0.1*" Binding="{Binding Path=Car.Mark.Name}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Модель" Width="0.1*" Binding="{Binding Path=Car.Model}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Год выпуска" Width="0.1*" Binding="{Binding Path=Car.Year}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Тип ТМ" Width="0.1*" Binding="{Binding Path=Car.TypeOfTransmission.Name}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Мощность" Width="0.1*" Binding="{Binding Path=Car.EnginePower}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Работы" Width="0.1*" Binding="{Binding Path=Work}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Начало" Width="0.1*" Binding="{Binding Path=WorkStart}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Конец" Width="0.1*" Binding="{Binding Path=WorkFinish}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Стоимость" Width="0.1*" Binding="{Binding Path=Cost}" IsReadOnly="True"></DataGridTextColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
         <Button Grid.Row="2" Grid.Column="0" Name ="btnDigram" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnDigram_Click">Статистика</Button>
     </Grid>
 </Window>

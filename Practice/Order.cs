@@ -17,6 +17,7 @@ namespace Practice
         /// Обслуживаемая машина
         /// </summary>
         public Car Car { get; set; }
+        public int CarId { get; set; }
         /// <summary>
         /// Работы
         /// </summary>

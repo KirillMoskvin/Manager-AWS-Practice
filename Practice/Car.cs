@@ -45,6 +45,7 @@ namespace Practice
         /// Владелец
         /// </summary>
         public Customer Owner { get; set; }
+        public int OwnerId { get; set; }
     }
 
     public class CarMark
