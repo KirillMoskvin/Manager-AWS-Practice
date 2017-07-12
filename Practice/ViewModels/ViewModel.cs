@@ -21,7 +21,10 @@ namespace Practice
             using (DBContext dbContext = new DBContext())
             {
                 //Конвертация в ObservableCollection
-                Orders = dbContext.Orders.Local;
+                Orders = new ObservableCollection<Order>(dbContext.Orders);
+                var l = dbContext.CarMarks.ToList();
+                var m = dbContext.Cars.ToList();
+                var a = dbContext.TransmissionTypes.ToList();
             }
         }
 

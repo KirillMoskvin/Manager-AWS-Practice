@@ -23,7 +23,7 @@ namespace Practice
         /// <summary>
         /// Мощность двигателя
         /// </summary>
-        public uint EnginePower { get; set; }
+        public int EnginePower { get; set; }
 
         /// <summary>
         /// Id марки машины
@@ -36,16 +36,16 @@ namespace Practice
         /// <summary>
         /// ID типа трансмиссии
         /// </summary>
-        public int TypeOfTransmissionId { get; set; }
+        public int TransmissionTypeId { get; set; }
         /// <summary>
         /// Тип трансмиссии
         /// </summary>
-        public TransmissionType TypeOfTransmission { get; set; }
+        public TransmissionType TransmissionType { get; set; }
         /// <summary>
         /// Владелец
         /// </summary>
-        public Customer Owner { get; set; }
-        public int OwnerId { get; set; }
+        public Customer Customer { get; set; }
+        public int CustomerId { get; set; }
     }
 
     public class CarMark

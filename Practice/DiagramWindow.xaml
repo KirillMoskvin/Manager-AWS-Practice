@@ -13,16 +13,18 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="88*"></ColumnDefinition>
+            <ColumnDefinition Width="123*"/>
+            <ColumnDefinition Width="181*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,10,0,0">Тип диаграммы: </TextBlock>
-        <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" SelectedIndex="0" Margin="10,10,0,0">
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,10,0,0">Тип диаграммы:</TextBlock>
+        <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" SelectedIndex="0" Margin="10,10,0,0" Grid.ColumnSpan="2" Height="22" Width="91">
             <ComboBoxItem>Столбчатая</ComboBoxItem>
             <ComboBoxItem>Круговая</ComboBoxItem>
             <ComboBoxItem>График</ComboBoxItem>
         </ComboBox>
-        
+
         <!--Тут будет график-->
-                 
+
     </Grid>
 </Window>

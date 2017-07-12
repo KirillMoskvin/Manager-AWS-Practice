@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DiagramWindow.xaml.cs">
+      <DependentUpon>DiagramWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201707102213528_InitialCreate.cs" />
     <Compile Include="Migrations\201707102213528_InitialCreate.Designer.cs">
       <DependentUpon>201707102213528_InitialCreate.cs</DependentUpon>
@@ -76,13 +79,21 @@
     <Compile Include="Migrations\201707111101099_CustomerId.Designer.cs">
       <DependentUpon>201707111101099_CustomerId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707121949207_Renamed Car.cs" />
+    <Compile Include="Migrations\201707121949207_Renamed Car.Designer.cs">
+      <DependentUpon>201707121949207_Renamed Car.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707122004258_Replaced uint.cs" />
+    <Compile Include="Migrations\201707122004258_Replaced uint.Designer.cs">
+      <DependentUpon>201707122004258_Replaced uint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="ViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="DiagramWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\ManagerWorkspace.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -90,19 +101,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Car.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="DBContext.cs" />
-    <Compile Include="DiagramWindow.xaml.cs">
-      <DependentUpon>DiagramWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\DBContext.cs" />
+    <Compile Include="Views\ManagerWorkspace.xaml.cs">
+      <DependentUpon>ManagerWorkspace.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Order.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -124,6 +132,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707111101099_CustomerId.resx">
       <DependentUpon>201707111101099_CustomerId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707121949207_Renamed Car.resx">
+      <DependentUpon>201707121949207_Renamed Car.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707122004258_Replaced uint.resx">
+      <DependentUpon>201707122004258_Replaced uint.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

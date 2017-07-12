@@ -33,6 +33,6 @@ namespace Practice
         /// <summary>
         /// Стоимость работ
         /// </summary>
-        public uint Cost { get; set; }
+        public int Cost { get; set; }
     }
 }
