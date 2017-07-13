@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Practice
+namespace CarServiceData
 {
     public class Car
     {
@@ -32,7 +32,7 @@ namespace Practice
         /// <summary>
         /// Название машины
         /// </summary>
-        public CarMark Mark { get; set; }
+        public CarMark CarMark { get; set; }
         /// <summary>
         /// ID типа трансмиссии
         /// </summary>
@@ -53,7 +53,7 @@ namespace Practice
         /// <summary>
         /// Id
         /// </summary>
-        public int CarMarkId { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Название
         /// </summary>

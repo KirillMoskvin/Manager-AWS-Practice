@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
-namespace Practice
+namespace CarServiceData
 {
     public class Order
     {
@@ -29,7 +29,7 @@ namespace Practice
         /// <summary>
         /// Дата завершения работ
         /// </summary>
-        public DateTime WorkFinish { get; set;}
+        public DateTime? WorkFinish { get; set;}
         /// <summary>
         /// Стоимость работ
         /// </summary>

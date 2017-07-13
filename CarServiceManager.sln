@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarServiceManagerData", "Practice\CarServiceManagerData.csproj", "{2652466F-12C9-4A8A-AFBB-F58DB47F00D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarServiceManagerUI", "Practice\CarServiceManagerUI.csproj", "{2652466F-12C9-4A8A-AFBB-F58DB47F00D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarServiceManagerUI", "CarServiceManagerData\CarServiceManagerUI.csproj", "{BDF0800E-7559-4145-A841-D70E8C148D41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarServiceManagerData", "CarServiceManagerData\CarServiceManagerData.csproj", "{BDF0800E-7559-4145-A841-D70E8C148D41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
