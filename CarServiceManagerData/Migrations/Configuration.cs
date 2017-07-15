@@ -71,18 +71,6 @@ namespace CarServiceManagerData.Migrations
                 new Order { Car = cars[6], Cost = 7000, Work = "Установка сигнализации", WorkStart = DateTime.Parse("2017-07-19 11:55:00Z"), WorkFinish = null },
                 new Order { Car = cars[0], Cost = 8000, Work = "Шиномонтаж", WorkStart = DateTime.Parse("2017-03-02 11:27:00Z"), WorkFinish = DateTime.Parse("2017-03-05 12:40:00Z") }
                 );
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
         }
     }
 }

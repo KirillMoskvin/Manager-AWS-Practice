@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Practice"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Рабочее место менеджера" MinHeight="600" Width="800">
     <Grid>
@@ -22,10 +23,23 @@
                     <WrapPanel>
                         <TextBlock Margin="0,10,0,0"><Run Text="Сортировать по:"/></TextBlock>
                         <ComboBox  Name = "cbSort" MinHeight="20" MinWidth="125" 
-                                  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                                  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"
+                                   SelectedIndex="{Binding SelectedSortItem}">
+
+                            <TextBlock>ID</TextBlock>
+                            <TextBlock>Марка</TextBlock>
+                            <TextBlock>Модель</TextBlock>
+                            <TextBlock>Год выпуска</TextBlock>
+                            <TextBlock>Тип трансмиссии</TextBlock>
+                            <TextBlock>Мощность двигателя</TextBlock>
+                            <TextBlock>Вид работ</TextBlock>
+                            <TextBlock>Начало выполнения</TextBlock>
+                            <TextBlock>Конец выполнения</TextBlock>
+                            <TextBlock>Стоимость</TextBlock>
+                        </ComboBox>
                         <TextBlock Margin="10,10,0,0"><Run Text="Способ:" /></TextBlock>
                         <ComboBox Name = "cbOrder" MinHeight="20" MinWidth="125" Margin="10,10,0,0"
-                                  SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                  SelectedIndex="{Binding SelectedSortRegime}" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <TextBlock>По возрастанию</TextBlock>
                             <TextBlock>По убыванию</TextBlock>
                         </ComboBox>
@@ -75,7 +89,7 @@
                 <DataGridTextColumn Header="Стоимость" Width="0.1*" Binding="{Binding Path=Cost}" IsReadOnly="True"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="2" Grid.Column="0" Name ="btnDigram" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnDigram_Click"
+        <Button Grid.Row="2" Grid.Column="0" Name ="btnDigram" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding ShowDiagramWindow}"
                 MinHeight="30" MinWidth="100" Margin="10,10,10,10">Статистика</Button>
     </Grid>
 </Window>
