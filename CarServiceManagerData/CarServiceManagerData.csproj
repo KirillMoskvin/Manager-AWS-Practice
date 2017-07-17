@@ -71,6 +71,7 @@
     <Compile Include="DiagramWindow.xaml.cs">
       <DependentUpon>DiagramWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FilterHelper.cs" />
     <Compile Include="Helpers\SortHelper.cs" />
     <Compile Include="Migrations\201707171727311_InitialCreate.cs" />
     <Compile Include="Migrations\201707171727311_InitialCreate.Designer.cs">

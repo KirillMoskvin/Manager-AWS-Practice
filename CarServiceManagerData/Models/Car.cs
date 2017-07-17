@@ -60,7 +60,7 @@ namespace CarServiceData
         public string Name { get; set; }
     }
 
-    public class TransmissionType
+    public class TransmissionType:IComparable
     {
         /// <summary>
         /// Id
@@ -70,5 +70,15 @@ namespace CarServiceData
         /// Название
         /// </summary>
         public string Name { get; set; }
+
+        public int CompareTo(object obj)
+        {
+            return ((TransmissionType)obj).Name.CompareTo(this.Name);
+        }
+
+        public override string ToString()
+        {
+            return Name.ToString();
+        }
     }
 }

@@ -12,6 +12,7 @@ using CarServiceData;
 using Practice;
 using Apex.MVVM;
 using CarServiceManagerData.Helpers;
+using System.Windows;
 
 namespace CarServiceData
 {
@@ -21,7 +22,18 @@ namespace CarServiceData
         /// Заказы
         /// </summary>
         public static ObservableCollection<Order> Orders { get; set; }
-
+        /// <summary>
+        /// Список всех столбцов
+        /// </summary>
+        public static List<string> Columns { get; set; }
+        /// <summary>
+        /// Список всех значений для фильтра
+        /// </summary>
+        public static ObservableCollection<object> ItemsToFilter { get; set; }
+        /// <summary>
+        /// Все заказы
+        /// </summary>
+        private List<Order> allOrders;
         /// <summary>
         /// команда для показа окна статистики
         /// </summary>
@@ -32,6 +44,10 @@ namespace CarServiceData
         /// </summary>
         Command sortItems;
         /// <summary>
+        /// Команда для отмены фильтрации
+        /// </summary>
+        Command unfilter;
+        /// <summary>
         /// Выбранный критерий сортировки
         /// </summary>
         int selectedSortItem = 0;
@@ -39,6 +55,14 @@ namespace CarServiceData
         /// Выбранный режим сортировки
         /// </summary>
         int selectedSortRegime = 0;
+        /// <summary>
+        /// Выбранный критерий фильтрации
+        /// </summary>
+        int selectedFilterItem = 0;
+        /// <summary>
+        /// Выбранный элемент для фильтрации
+        /// </summary>
+        int selectedFilterIndex = -1;
 
         public ViewModel()
         {
@@ -48,10 +72,17 @@ namespace CarServiceData
                 dbContext.Configuration.ProxyCreationEnabled = true;
                 dbContext.Configuration.LazyLoadingEnabled = true;
                 dbContext.Configuration.AutoDetectChangesEnabled = true;
-                Orders = new ObservableCollection<Order>(dbContext.Orders.Include("Car").Include("Car.TransmissionType").Include("Car.CarMark"));
+                allOrders = (dbContext.Orders.Include("Car").Include("Car.TransmissionType").Include("Car.CarMark")).ToList();
+                Orders = new ObservableCollection<Order>(allOrders);
             }
             showGraphicWindow = new Command(DoShowDiagramWindow);
+            unfilter = new Command(DoUnfilter);
+
             sortItems = new Command(MakeSort);
+            Columns = new List<string> { "ID", "Марка", "Модель", "Год выпуска", "Тип трансмиссии", "Мощность двигателя", "Вид работ",
+                "Начало выполнения", "Конец выполнения", "Стоимость" };
+            ItemsToFilter = new ObservableCollection<object>();
+            FilterHelper.GetAllItemsFromColumn(allOrders, selectedFilterItem, ItemsToFilter);
         }
 
         /// <summary>
@@ -73,6 +104,15 @@ namespace CarServiceData
             DiagramWindow dw = new DiagramWindow();
             dw.Owner = (System.Windows.Window)owner; //Чтобы окно закрывалось при закрытии главной формы
             dw.Show();
+        }
+        /// <summary>
+        /// Отмена фильтрации
+        /// </summary>
+        private void DoUnfilter()
+        {
+            Orders.Clear();
+            foreach (Order ord in allOrders)
+                Orders.Add(ord);
         }
 
         /// <summary>
@@ -151,6 +191,48 @@ namespace CarServiceData
         public Command SortItems
         {
             get { return sortItems; }
+        }
+        /// <summary>
+        /// Команда для отмены фильтрации 
+        /// </summary>
+        public Command Unfilter
+        {
+            get { return unfilter; }
+        }
+        /// <summary>
+        /// Свойство для изменения критерия филтрации
+        /// </summary>
+        public int SelectedFilterItem
+        {
+            get { return selectedFilterItem; }
+            set {
+                selectedFilterItem = value;
+                SelectedFilterIndex = -1;
+                //обновляем все значения фильтра
+                FilterHelper.GetAllItemsFromColumn(allOrders, selectedFilterItem, ItemsToFilter);
+                if (selectedFilterItem== 8)
+                    ItemsToFilter.Add("В процессе");
+            }
+        }
+        /// <summary>
+        /// Изменения фильтра
+        /// </summary>
+        public int SelectedFilterIndex
+        {
+            get { return selectedFilterIndex; }
+            set {
+                selectedFilterIndex = value;
+
+                if (selectedFilterIndex >= 0)
+                {
+                    DoUnfilter();
+                    if (selectedFilterItem == 8 && ItemsToFilter[SelectedFilterIndex] is string) //отдельно обрабатываем заказы в процессе обработки
+                        FilterHelper.FilterCollection(Orders, selectedFilterItem, null);
+                    else 
+                        FilterHelper.FilterCollection(Orders, selectedFilterItem, ItemsToFilter[SelectedFilterIndex]);
+                }
+
+            }
         }
 
     }

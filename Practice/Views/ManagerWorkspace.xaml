@@ -24,18 +24,8 @@
                         <TextBlock Margin="0,10,0,0"><Run Text="Сортировать по:"/></TextBlock>
                         <ComboBox  Name = "cbSort" MinHeight="20" MinWidth="125" 
                                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"
+                                   ItemsSource="{Binding Columns}"
                                    SelectedIndex="{Binding SelectedSortItem}">
-
-                            <TextBlock>ID</TextBlock>
-                            <TextBlock>Марка</TextBlock>
-                            <TextBlock>Модель</TextBlock>
-                            <TextBlock>Год выпуска</TextBlock>
-                            <TextBlock>Тип трансмиссии</TextBlock>
-                            <TextBlock>Мощность двигателя</TextBlock>
-                            <TextBlock>Вид работ</TextBlock>
-                            <TextBlock>Начало выполнения</TextBlock>
-                            <TextBlock>Конец выполнения</TextBlock>
-                            <TextBlock>Стоимость</TextBlock>
                         </ComboBox>
                         <TextBlock Margin="10,10,0,0"><Run Text="Способ:" /></TextBlock>
                         <ComboBox Name = "cbOrder" MinHeight="20" MinWidth="125" Margin="10,10,0,0"
@@ -52,10 +42,23 @@
                     <WrapPanel>
                         <TextBlock Margin="0,10,0,0" >Фильтровать по:</TextBlock>
                         <ComboBox Name="cbFilter" MinHeight="20" MinWidth="100" Margin="10,10,0,0"
-                                  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                  HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  ItemsSource="{Binding Columns}"
+                                  SelectedIndex="{Binding SelectedFilterItem}"
+                                  />
                         <TextBlock Margin="10,10,0,0">Значение:</TextBlock>
                         <ComboBox Name="cbFilterValue" MinHeight="20" MinWidth="100" Margin="10,10,0,0"
-                                  HorizontalAlignment="Left" VerticalAlignment="Top" IsEditable="True" StaysOpenOnEdit="True"/>
+                                  HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  SelectedIndex="{Binding SelectedFilterIndex}"
+                                  ItemsSource="{Binding ItemsToFilter}"
+                                  />
+                        <Button Name="Unfilter"
+                                Margin="10,10,0,0"
+                                MinHeight ="23" Height="23" MinWidth="50"
+                                Command="{Binding Unfilter}"
+                                >
+                            Сброс
+                        </Button>
                     </WrapPanel>
                 </TabItem.Content>
             </TabItem>
@@ -65,7 +68,9 @@
                     <WrapPanel>
                         <TextBlock Margin="0,10,0,0" >Столбец:</TextBlock>
                         <ComboBox Name="cbSearch" MinHeight="20" MinWidth="100" Margin="10,10,0,0"
-                                  HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                  HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  ItemsSource="{Binding Columns}"
+                                  SelectedIndex="0"/>
                         <TextBlock Margin="10,10,0,0">Значение:</TextBlock>
                         <TextBox Name="tbSearchValue" MinHeight="20" MinWidth="100" Margin="10,10,0,0"
                                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
