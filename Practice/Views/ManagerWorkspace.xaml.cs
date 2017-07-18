@@ -26,17 +26,5 @@ namespace Practice
             InitializeComponent();
             DataContext = new ViewModel();        
         }
-
-        private void btnDigram_Click(object sender, RoutedEventArgs e)
-        {
-            DiagramWindow dw = new DiagramWindow();
-            dw.Owner = this; //Чтобы окно закрывалось при закрытии главной формы
-            dw.Show();
-        }
-
-        private void cbSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
