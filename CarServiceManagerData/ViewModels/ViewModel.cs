@@ -30,6 +30,8 @@ namespace CarServiceData
         /// Список всех значений для фильтра
         /// </summary>
         public static ObservableCollection<object> ItemsToFilter { get; set; }
+
+        public static Order HoveredRow { get; set; }
         /// <summary>
         /// Все заказы
         /// </summary>

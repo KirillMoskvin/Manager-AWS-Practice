@@ -81,8 +81,23 @@
         <!--Отображение таблицы -->
         <DataGrid Grid.Row="1" Grid.Column="0" AutoGenerateColumns="False" x:Name="grOrders" ItemsSource="{Binding Orders}"
                   IsReadOnly="True" Focusable="False" VerticalAlignment="Stretch">
+
+            <!--Tooltip-->
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <TextBlock Text="{Binding ShowCellInfo}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="IsHitTestVisible" Value="True" />
+                </Style>
+            </DataGrid.Resources>
+            
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Width="0.1*" Binding="{Binding Path=OrderId}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="ID" Width="0.1*" Binding="{Binding Path=OrderId}" IsReadOnly="True">
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Марка" Width="0.1*" Binding="{Binding Path=Car.CarMark.Name}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="Модель" Width="0.1*" Binding="{Binding Path=Car.Model}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="Год выпуска" Width="0.1*" Binding="{Binding Path=Car.Year}" IsReadOnly="True"></DataGridTextColumn>
