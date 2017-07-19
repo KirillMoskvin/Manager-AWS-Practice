@@ -13,10 +13,11 @@ using Practice;
 using Apex.MVVM;
 using CarServiceManagerData.Helpers;
 using System.Windows;
+using CarServiceManagerData.ViewModels;
 
 namespace CarServiceData
 {
-    public class ViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// Заказы
@@ -65,7 +66,7 @@ namespace CarServiceData
         /// </summary>
         int selectedFilterIndex = -1;
 
-        public ViewModel()
+        public MainViewModel()
         {
             using (DBContext dbContext = new DBContext())
             {
@@ -83,7 +84,7 @@ namespace CarServiceData
             Columns = new List<string> { "ID", "Марка", "Модель", "Год выпуска", "Тип трансмиссии", "Мощность двигателя", "Вид работ",
                 "Начало выполнения", "Конец выполнения", "Стоимость" };
             ItemsToFilter = new ObservableCollection<object>();
-            FilterHelper.GetAllItemsFromColumn(allOrders, selectedFilterItem, ItemsToFilter);
+            FilterHelper.GetAllItemsFromColumn(allOrders, (TableColumns)selectedFilterItem, ItemsToFilter);
         }
 
         /// <summary>
@@ -121,37 +122,37 @@ namespace CarServiceData
         /// </summary>
         private void MakeSort()
         {
-            bool ascending = SelectedSortRegime == 0;
-            switch (selectedSortItem)
+            SortOrder ascending = (SortOrder)SelectedSortRegime;
+            switch ((TableColumns)selectedSortItem)
             {
-                case 0:
+                case TableColumns.ID:
                     SortHelper.SortCollection(Orders, i => i.OrderId, ascending);
                     break;
-                case 1:
+                case TableColumns.CarMark:
                     SortHelper.SortCollection(Orders, i => i.Car.CarMark.Name, ascending);
                     break;
-                case 2:
+                case TableColumns.CarModel:
                     SortHelper.SortCollection(Orders, i => i.Car.Model, ascending);
                     break;
-                case 3:
+                case TableColumns.CarYear:
                     SortHelper.SortCollection(Orders, i => i.Car.Year, ascending);
                     break;
-                case 4:
+                case TableColumns.CarTransmissionType:
                     SortHelper.SortCollection(Orders, i => i.Car.TransmissionType.Name, ascending);
                     break;
-                case 5:
+                case TableColumns.CarEnginePower:
                     SortHelper.SortCollection(Orders, i => i.Car.EnginePower, ascending);
                     break;
-                case 6:
+                case TableColumns.WorkType:
                     SortHelper.SortCollection(Orders, i => i.Work, ascending);
                     break;
-                case 7:
+                case TableColumns.WorkStart:
                     SortHelper.SortCollection(Orders, i => i.WorkStart, ascending);
                     break;
-                case 8:
+                case TableColumns.WorkEnd:
                     SortHelper.SortCollection(Orders, i => i.WorkFinish, ascending);
                     break;
-                case 9:
+                case TableColumns.Cost:
                     SortHelper.SortCollection(Orders, i => i.Cost, ascending);
                     break;
             }
@@ -210,7 +211,7 @@ namespace CarServiceData
                 selectedFilterItem = value;
                 SelectedFilterIndex = -1;
                 //обновляем все значения фильтра
-                FilterHelper.GetAllItemsFromColumn(allOrders, selectedFilterItem, ItemsToFilter);
+                FilterHelper.GetAllItemsFromColumn(allOrders, (TableColumns)selectedFilterItem, ItemsToFilter);
                 if (selectedFilterItem== 8)
                     ItemsToFilter.Add("В процессе");
             }
@@ -227,12 +228,11 @@ namespace CarServiceData
                 if (selectedFilterIndex >= 0)
                 {
                     DoUnfilter();
-                    if (selectedFilterItem == 8 && ItemsToFilter[SelectedFilterIndex] is string) //отдельно обрабатываем заказы в процессе обработки
-                        FilterHelper.FilterCollection(Orders, selectedFilterItem, null);
+                    if ((TableColumns)selectedFilterItem == TableColumns.WorkEnd && ItemsToFilter[SelectedFilterIndex] is string) //отдельно обрабатываем заказы в процессе обработки
+                        FilterHelper.FilterCollection(Orders, (TableColumns)selectedFilterItem, null);
                     else 
-                        FilterHelper.FilterCollection(Orders, selectedFilterItem, ItemsToFilter[SelectedFilterIndex]);
+                        FilterHelper.FilterCollection(Orders, (TableColumns)selectedFilterItem, ItemsToFilter[SelectedFilterIndex]);
                 }
-
             }
         }
 

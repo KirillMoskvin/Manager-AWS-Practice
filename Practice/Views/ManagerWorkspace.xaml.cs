@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarServiceData;
+using CarServiceManagerData.ViewModels;
 
 namespace Practice
 {
@@ -24,7 +25,7 @@ namespace Practice
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel();        
+            DataContext = new MainViewModel();        
         }
     }
 }

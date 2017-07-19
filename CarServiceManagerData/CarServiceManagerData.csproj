@@ -71,8 +71,6 @@
     <Compile Include="DiagramWindow.xaml.cs">
       <DependentUpon>DiagramWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\FilterHelper.cs" />
-    <Compile Include="Helpers\SortHelper.cs" />
     <Compile Include="Migrations\201707171727311_InitialCreate.cs" />
     <Compile Include="Migrations\201707171727311_InitialCreate.Designer.cs">
       <DependentUpon>201707171727311_InitialCreate.cs</DependentUpon>
@@ -86,7 +84,6 @@
       <DependentUpon>201707172028074_Added id.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="DiagramWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
