@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace CarServiceManagerUI
+namespace Practice
 {
     /// <summary>
     /// Логика взаимодействия для DiagramWindow.xaml

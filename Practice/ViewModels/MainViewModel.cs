@@ -14,6 +14,7 @@ using Apex.MVVM;
 using CarServiceManagerData.Helpers;
 using System.Windows;
 using CarServiceManagerData.ViewModels;
+using CarServiceManagerData.DataControllers;
 
 namespace CarServiceData
 {
@@ -68,15 +69,9 @@ namespace CarServiceData
 
         public MainViewModel()
         {
-            using (DBContext dbContext = new DBContext())
-            {
-                //Конвертация в ObservableCollection
-                dbContext.Configuration.ProxyCreationEnabled = true;
-                dbContext.Configuration.LazyLoadingEnabled = true;
-                dbContext.Configuration.AutoDetectChangesEnabled = true;
-                allOrders = (dbContext.Orders.Include("Car").Include("Car.TransmissionType").Include("Car.CarMark")).ToList();
-                Orders = new ObservableCollection<Order>(allOrders);
-            }
+            allOrders = (List<Order>)DataController.GetAllOrders();
+            Orders = new ObservableCollection<Order>(allOrders);
+
             showGraphicWindow = new Command(DoShowDiagramWindow);
             unfilter = new Command(DoUnfilter);
 

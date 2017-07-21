@@ -81,6 +81,9 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SortOrder.cs" />
     <Compile Include="ViewModels\TableColumns.cs" />
+    <Compile Include="Views\DiagramWindow.xaml.cs">
+      <DependentUpon>DiagramWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ManagerWorkspace.xaml.cs">
       <DependentUpon>ManagerWorkspace.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DiagramWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ManagerWorkspace.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -128,9 +135,6 @@
       <Project>{bdf0800e-7559-4145-a841-d70e8c148d41}</Project>
       <Name>CarServiceManagerData</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
