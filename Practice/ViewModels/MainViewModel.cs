@@ -15,6 +15,7 @@ using CarServiceManagerData.Helpers;
 using System.Windows;
 using CarServiceManagerData.ViewModels;
 using CarServiceManagerData.DataControllers;
+using Practice.Helpers;
 
 namespace CarServiceData
 {
@@ -51,6 +52,10 @@ namespace CarServiceData
         /// </summary>
         Command unfilter;
         /// <summary>
+        /// Команда для поиска
+        /// </summary>
+        Command search;
+        /// <summary>
         /// Выбранный критерий сортировки
         /// </summary>
         int selectedSortItem = 0;
@@ -66,6 +71,22 @@ namespace CarServiceData
         /// Выбранный элемент для фильтрации
         /// </summary>
         int selectedFilterIndex = -1;
+        /// <summary>
+        /// Выбранная колонка для поиска
+        /// </summary>
+        int selectedSearchItem = 0;
+        /// <summary>
+        /// Содержимое, которое будем искать
+        /// </summary>
+        string searchValue = "";
+        /// <summary>
+        /// производилась ли фильтрация
+        /// </summary>
+        bool isFiltered = false;
+        /// <summary>
+        /// производился ли поиск
+        /// </summary>
+        bool isSearched = false;
 
         public MainViewModel()
         {
@@ -74,8 +95,9 @@ namespace CarServiceData
 
             showGraphicWindow = new Command(DoShowDiagramWindow);
             unfilter = new Command(DoUnfilter);
-
+            search = new Command(MakeSearch);
             sortItems = new Command(MakeSort);
+
             Columns = new List<string> { "ID", "Марка", "Модель", "Год выпуска", "Тип трансмиссии", "Мощность двигателя", "Вид работ",
                 "Начало выполнения", "Конец выполнения", "Стоимость" };
             ItemsToFilter = new ObservableCollection<object>();
@@ -110,6 +132,7 @@ namespace CarServiceData
             Orders.Clear();
             foreach (Order ord in allOrders)
                 Orders.Add(ord);
+            isFiltered = false;
         }
 
         /// <summary>
@@ -151,6 +174,22 @@ namespace CarServiceData
                     SortHelper.SortCollection(Orders, i => i.Cost, ascending);
                     break;
             }
+        }
+
+        /// <summary>
+        /// Поиск
+        /// </summary>
+        private void MakeSearch()
+        {
+            DoUnfilter();
+            string errorMessage = "";
+            SearchResult res = SearchHelper.SearchInCollection(Orders, (TableColumns)selectedSearchItem, searchValue.Trim(), ref errorMessage);
+            if (res == SearchResult.Error)
+                MessageBox.Show(errorMessage);
+            else if (res == SearchResult.NothingFound)
+                MessageBox.Show("Ничего не найдено");
+            else
+                isSearched = true;
         }
 
         /// <summary>
@@ -197,6 +236,13 @@ namespace CarServiceData
             get { return unfilter; }
         }
         /// <summary>
+        /// Команда для поиска
+        /// </summary>
+        public Command SearchItem
+        {
+            get { return search; }
+        }
+        /// <summary>
         /// Свойство для изменения критерия филтрации
         /// </summary>
         public int SelectedFilterItem
@@ -228,6 +274,33 @@ namespace CarServiceData
                     else 
                         FilterHelper.FilterCollection(Orders, (TableColumns)selectedFilterItem, ItemsToFilter[SelectedFilterIndex]);
                 }
+            }
+        }
+        /// <summary>
+        /// Изменение колноки поиска
+        /// </summary>
+        public int SelectedSearchItem
+        {
+            get { return selectedSearchItem; }
+            set
+            {
+                selectedSearchItem = value;
+                if (isSearched)
+                {
+                    DoUnfilter();
+                    isSearched = false;
+                }
+            }
+        }
+        /// <summary>
+        /// Изменение строки, которую мы будем искать
+        /// </summary>
+        public string SearchValue
+        {
+            get { return searchValue; }
+            set
+            {
+                searchValue = value;
             }
         }
 
