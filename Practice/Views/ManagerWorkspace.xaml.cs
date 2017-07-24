@@ -27,5 +27,6 @@ namespace Practice
             InitializeComponent();
             DataContext = new MainViewModel();        
         }
+
     }
 }

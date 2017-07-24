@@ -26,6 +26,10 @@ namespace CarServiceData
         /// </summary>
         public static ObservableCollection<Order> Orders { get; set; }
         /// <summary>
+        /// Текущая страница
+        /// </summary>
+        public static ObservableCollection<Order> CurrentPage { get; set; }
+        /// <summary>
         /// Список всех столбцов
         /// </summary>
         public static List<string> Columns { get; set; }
@@ -56,6 +60,14 @@ namespace CarServiceData
         /// </summary>
         Command search;
         /// <summary>
+        /// Команда для перехода к следующей странице
+        /// </summary>
+        Command toNextPage;
+        /// <summary>
+        /// Команда для перехода к предыдущей странице
+        /// </summary>
+        Command toPrevPage;
+        /// <summary>
         /// Выбранный критерий сортировки
         /// </summary>
         int selectedSortItem = 0;
@@ -76,6 +88,19 @@ namespace CarServiceData
         /// </summary>
         int selectedSearchItem = 0;
         /// <summary>
+        /// Количество записей на странице
+        /// </summary>
+        int recordsPerPage = 10;
+        /// <summary>
+        /// Текущая запись
+        /// </summary>
+        int currentPageNum = 1;
+        /// <summary>
+        /// Всего страниц
+        /// </summary>
+        int totalPages;
+
+        /// <summary>
         /// Содержимое, которое будем искать
         /// </summary>
         string searchValue = "";
@@ -92,11 +117,17 @@ namespace CarServiceData
         {
             allOrders = (List<Order>)DataController.GetAllOrders();
             Orders = new ObservableCollection<Order>(allOrders);
+            CurrentPage = new ObservableCollection<Order>();
+            totalPages = Orders.Count / recordsPerPage + (Orders.Count % recordsPerPage == 0 ? 0 : 1);
+            ToFirstPage();
+            
 
             showGraphicWindow = new Command(DoShowDiagramWindow);
             unfilter = new Command(DoUnfilter);
             search = new Command(MakeSearch);
             sortItems = new Command(MakeSort);
+            toPrevPage = new Command(GoToPrevPage);
+            toNextPage = new Command(GoToNextPage);
 
             Columns = new List<string> { "ID", "Марка", "Модель", "Год выпуска", "Тип трансмиссии", "Мощность двигателя", "Вид работ",
                 "Начало выполнения", "Конец выполнения", "Стоимость" };
@@ -133,6 +164,8 @@ namespace CarServiceData
             foreach (Order ord in allOrders)
                 Orders.Add(ord);
             isFiltered = false;
+            TotalPages = Orders.Count / recordsPerPage + (Orders.Count % recordsPerPage == 0 ? 0 : 1);
+            ToFirstPage();
         }
 
         /// <summary>
@@ -174,6 +207,7 @@ namespace CarServiceData
                     SortHelper.SortCollection(Orders, i => i.Cost, ascending);
                     break;
             }
+            ToFirstPage();
         }
 
         /// <summary>
@@ -189,7 +223,48 @@ namespace CarServiceData
             else if (res == SearchResult.NothingFound)
                 MessageBox.Show("Ничего не найдено");
             else
+            {
                 isSearched = true;
+                TotalPages = Orders.Count / recordsPerPage + (Orders.Count % recordsPerPage == 0 ? 0 : 1);
+                ToFirstPage();
+            }
+        }
+
+        /// <summary>
+        /// Возврат на первую страницу
+        /// </summary>
+        private void ToFirstPage()
+        {
+            CurrentPage.Clear();
+            CurrentPageNum = 1;
+            for (int i = 0; i<Orders.Count && i < recordsPerPage; ++i)
+                CurrentPage.Add(Orders[i]);
+        }
+        /// <summary>
+        /// Возврат на предыдущую страницу
+        /// </summary>
+        private void GoToPrevPage()
+        {
+            if (currentPageNum > 1)
+            {
+                CurrentPageNum--;
+                CurrentPage.Clear();
+                for (int i = (currentPageNum-1) * recordsPerPage; i < Orders.Count && i < currentPageNum  * recordsPerPage; ++i)
+                    CurrentPage.Add(Orders[i]);
+            }
+        }
+        /// <summary>
+        /// На следующую страницу
+        /// </summary>
+        private void GoToNextPage()
+        {
+            if(currentPageNum < TotalPages)
+            {
+                CurrentPageNum++;
+                CurrentPage.Clear();
+                for (int i = (currentPageNum-1) * recordsPerPage; i < Orders.Count && i < currentPageNum * recordsPerPage; ++i)
+                    CurrentPage.Add(Orders[i]);
+            }
         }
 
         /// <summary>
@@ -243,6 +318,20 @@ namespace CarServiceData
             get { return search; }
         }
         /// <summary>
+        /// Команда возврата на предыдущую страницу
+        /// </summary>
+        public Command ToPrevPage
+        {
+            get { return toPrevPage; }
+        }
+        /// <summary>
+        /// Команда возврата на следующую страницу
+        /// </summary>
+        public Command ToNextPage
+        {
+            get { return toNextPage; }
+        }
+        /// <summary>
         /// Свойство для изменения критерия филтрации
         /// </summary>
         public int SelectedFilterItem
@@ -273,6 +362,9 @@ namespace CarServiceData
                         FilterHelper.FilterCollection(Orders, (TableColumns)selectedFilterItem, null);
                     else 
                         FilterHelper.FilterCollection(Orders, (TableColumns)selectedFilterItem, ItemsToFilter[SelectedFilterIndex]);
+                    isFiltered = true;
+                    TotalPages = Orders.Count / recordsPerPage + (Orders.Count % recordsPerPage == 0 ? 0 : 1);
+                    ToFirstPage();
                 }
             }
         }
@@ -301,6 +393,45 @@ namespace CarServiceData
             set
             {
                 searchValue = value;
+            }
+        }
+
+        /// <summary>
+        /// Изменение количества записей на странице
+        /// </summary>
+        public int RecordsPerPage
+        {
+            get { return recordsPerPage; }
+            set {
+                if (value > 0)
+                {
+                    recordsPerPage = value;
+                    TotalPages = Orders.Count / recordsPerPage + (Orders.Count % recordsPerPage == 0 ? 0 : 1);
+                    ToFirstPage();
+                }
+            }
+        }
+        /// <summary>
+        /// номер текущей страницы
+        /// </summary>
+        public int CurrentPageNum
+        {
+            get { return currentPageNum; }
+            set {
+                currentPageNum = value;
+                OnPropertyChanged("CurrentPageNum");
+            }
+        }
+        /// <summary>
+        /// Общее количество страниц
+        /// </summary>
+        public int TotalPages
+        {
+            get { return totalPages; }
+            set
+            {
+                totalPages = value;
+                OnPropertyChanged("TotalPages");
             }
         }
 

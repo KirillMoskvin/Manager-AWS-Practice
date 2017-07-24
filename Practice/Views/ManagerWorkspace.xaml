@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Practice"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ControlLib="clr-namespace:ControlLib;assembly=NumericUpDown"
+        xmlns:talex="http://schemas.talex-soft.com/2010/xaml/presentation"
+        xmlns:numeric="http://gu.se/NumericInput"
         mc:Ignorable="d"
         Title="Рабочее место менеджера" MinHeight="600" MinWidth="800">
     <Grid>
@@ -88,41 +91,54 @@
             </TabItem>
         </TabControl>
         <!--Отображение таблицы -->
-        <DataGrid Grid.Row="1" Grid.Column="0" AutoGenerateColumns="False" x:Name="grOrders" ItemsSource="{Binding Orders}"
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <WrapPanel>
+                <Button Width="20" Content="&#60;" Margin="10,0,10,0" Command="{Binding ToPrevPage}"/>
+                <TextBlock>Страница&#160;</TextBlock>
+                <TextBlock Text="{Binding CurrentPageNum}"></TextBlock>
+                <TextBlock>&#160;из&#160;</TextBlock>
+                <TextBlock Text="{Binding TotalPages}" ></TextBlock>
+                <Button Width="20" Content="&#62;" Margin="10,0,10,0" Command="{Binding ToNextPage}"/>
+
+                <TextBlock>Записей на странице:&#160;</TextBlock>
+                <numeric:IntBox Margin="10, 0,0,0" Width="60" Value="{Binding RecordsPerPage, UpdateSourceTrigger=PropertyChanged}"></numeric:IntBox>
+            </WrapPanel>
+            <DataGrid  AutoGenerateColumns="False" x:Name="grOrders" ItemsSource="{Binding CurrentPage}"
                   IsReadOnly="True" Focusable="False" VerticalAlignment="Stretch">
 
-            <!--Tooltip-->
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
-                    <Setter Property="ToolTip">
-                        <Setter.Value>
-                            <TextBlock Text="{Binding Path=Car.Customer.CustomerInfo}"/>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="IsHitTestVisible" Value="True" />
-                </Style>
-            </DataGrid.Resources>
+                <!--Tooltip-->
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
+                        <Setter Property="ToolTip">
+                            <Setter.Value>
+                                <TextBlock Text="{Binding Path=Car.Customer.CustomerInfo}"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="IsHitTestVisible" Value="True" />
+                    </Style>
+                </DataGrid.Resources>
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Width="0.1*" Binding="{Binding Path=OrderId}" IsReadOnly="True">
-                    <!--<DataGridTextColumn.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Width="0.1*" Binding="{Binding Path=OrderId}" IsReadOnly="True">
+                        <!--<DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell">
                             <Setter Property="ToolTip" Value="{Binding Path=Car.Customer.FirstName}" />
                         </Style>
                     </DataGridTextColumn.CellStyle>-->
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Марка" Width="0.1*" Binding="{Binding Path=Car.CarMark.Name}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="Модель" Width="0.1*" Binding="{Binding Path=Car.Model}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="Год выпуска" Width="0.1*" Binding="{Binding Path=Car.Year}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="Тип ТМ" Width="0.1*" Binding="{Binding Path=Car.TransmissionType.Name}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="Мощность" Width="0.1*" Binding="{Binding Path=Car.EnginePower}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="Работы" Width="0.1*" Binding="{Binding Path=Work}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="Начало" Width="0.1*" Binding="{Binding Path=WorkStart}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="Конец" Width="0.1*" Binding="{Binding Path=WorkFinish, TargetNullValue=В процессе}" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Header="Стоимость" Width="0.1*" Binding="{Binding Path=Cost}" IsReadOnly="True"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Марка" Width="0.1*" Binding="{Binding Path=Car.CarMark.Name}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Модель" Width="0.1*" Binding="{Binding Path=Car.Model}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Год выпуска" Width="0.1*" Binding="{Binding Path=Car.Year}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Тип ТМ" Width="0.1*" Binding="{Binding Path=Car.TransmissionType.Name}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Мощность" Width="0.1*" Binding="{Binding Path=Car.EnginePower}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Работы" Width="0.1*" Binding="{Binding Path=Work}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Начало" Width="0.1*" Binding="{Binding Path=WorkStart}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Конец" Width="0.1*" Binding="{Binding Path=WorkFinish, TargetNullValue=В процессе}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Стоимость" Width="0.1*" Binding="{Binding Path=Cost}" IsReadOnly="True"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
         <Button Grid.Row="2" Grid.Column="0" Name ="btnDigram" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding ShowDiagramWindow}"
                 MinHeight="30" MinWidth="100" Margin="10,10,10,10">Статистика</Button>
     </Grid>
