@@ -41,5 +41,16 @@ namespace CarServiceData
         /// Машины, принадлежащие этому клиенту
         /// </summary>
         public List<Car> Cars { get; set; }
+
+        public string CustomerInfo
+        {
+            get {
+                return "Фамилия: " + SecondName + Environment.NewLine +
+                  "Имя: " + FirstName + Environment.NewLine +
+                  "Отчество: " + ThirdName + Environment.NewLine +
+                  "Год рождения: " + BirthDate.Year + Environment.NewLine +
+                  "Телефон: " + Phone;
+            }
+        }
     }
 }

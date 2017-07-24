@@ -97,15 +97,20 @@
                     <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
                     <Setter Property="ToolTip">
                         <Setter.Value>
-                            <TextBlock Text="{Binding ShowCellInfo}"/>
+                            <TextBlock Text="{Binding Path=Car.Customer.CustomerInfo}"/>
                         </Setter.Value>
                     </Setter>
                     <Setter Property="IsHitTestVisible" Value="True" />
                 </Style>
             </DataGrid.Resources>
-            
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="0.1*" Binding="{Binding Path=OrderId}" IsReadOnly="True">
+                    <!--<DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding Path=Car.Customer.FirstName}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>-->
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Марка" Width="0.1*" Binding="{Binding Path=Car.CarMark.Name}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="Модель" Width="0.1*" Binding="{Binding Path=Car.Model}" IsReadOnly="True"></DataGridTextColumn>

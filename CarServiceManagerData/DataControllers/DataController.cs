@@ -22,7 +22,7 @@ namespace CarServiceManagerData.DataControllers
                 dbContext.Configuration.ProxyCreationEnabled = true;
                 dbContext.Configuration.LazyLoadingEnabled = true;
                 dbContext.Configuration.AutoDetectChangesEnabled = true;
-                return (dbContext.Orders.Include("Car").Include("Car.TransmissionType").Include("Car.CarMark")).ToList();
+                return (dbContext.Orders.Include("Car").Include("Car.TransmissionType").Include("Car.CarMark").Include("Car.Customer")).ToList();
             }
         }
 
