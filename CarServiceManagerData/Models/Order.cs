@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace CarServiceData
 {
@@ -33,6 +34,28 @@ namespace CarServiceData
         /// <summary>
         /// Стоимость работ
         /// </summary>
-        public int Cost { get; set; }
+        public decimal Cost { get; set; }
+
+        /// <summary>
+        /// Свойство для формата вывода даты
+        /// </summary>
+        public string WorkStartDate
+        {
+            get { return WorkStart.ToString(CultureInfo.CurrentCulture); }
+        }
+        /// <summary>
+        /// Свойство для формата вывода даты окончания работы
+        /// </summary>
+        public string WorkFinishDate
+        {
+            get
+            {
+                if (WorkFinish == null)
+                    return "В процессе";
+                return ((DateTime)WorkFinish).ToString(CultureInfo.CurrentCulture);
+                    
+            }
+        }
+
     }
 }

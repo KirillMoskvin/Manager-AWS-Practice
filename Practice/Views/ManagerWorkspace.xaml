@@ -1,4 +1,5 @@
 ﻿<Window x:Class="Practice.MainWindow"
+        x:Name="ManagerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,11 +11,11 @@
         xmlns:numeric="http://gu.se/NumericInput"
         mc:Ignorable="d"
         Title="Рабочее место менеджера" MinHeight="600" MinWidth="800">
-    <Grid>
+    <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
-            <RowDefinition Height="125"></RowDefinition>
+            <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -91,20 +92,18 @@
             </TabItem>
         </TabControl>
         <!--Отображение таблицы -->
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <WrapPanel>
-                <Button Width="20" Content="&#60;" Margin="10,0,10,0" Command="{Binding ToPrevPage}"/>
-                <TextBlock>Страница&#160;</TextBlock>
-                <TextBlock Text="{Binding CurrentPageNum}"></TextBlock>
-                <TextBlock>&#160;из&#160;</TextBlock>
-                <TextBlock Text="{Binding TotalPages}" ></TextBlock>
-                <Button Width="20" Content="&#62;" Margin="10,0,10,0" Command="{Binding ToNextPage}"/>
-
-                <TextBlock>Записей на странице:&#160;</TextBlock>
-                <numeric:IntBox Margin="10, 0,0,0" Width="60" Value="{Binding RecordsPerPage, UpdateSourceTrigger=PropertyChanged}"></numeric:IntBox>
-            </WrapPanel>
-            <DataGrid  AutoGenerateColumns="False" x:Name="grOrders" ItemsSource="{Binding CurrentPage}"
-                  IsReadOnly="True" Focusable="False" VerticalAlignment="Stretch">
+   
+            
+            <DataGrid Grid.Row="1" Grid.Column="0"
+                      AutoGenerateColumns="False" x:Name="grOrders" ItemsSource="{Binding CurrentPage}"
+                  IsReadOnly="True" Focusable="False" 
+                       VerticalAlignment="Stretch"
+                       ScrollViewer.CanContentScroll="True" 
+                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                       ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                       CanUserAddRows="False"
+                       HorizontalAlignment="Stretch"
+                       >
 
                 <!--Tooltip-->
                 <DataGrid.Resources>
@@ -133,13 +132,27 @@
                     <DataGridTextColumn Header="Тип ТМ" Width="0.1*" Binding="{Binding Path=Car.TransmissionType.Name}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Мощность" Width="0.1*" Binding="{Binding Path=Car.EnginePower}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Работы" Width="0.1*" Binding="{Binding Path=Work}" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Начало" Width="0.1*" Binding="{Binding Path=WorkStart}" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Конец" Width="0.1*" Binding="{Binding Path=WorkFinish, TargetNullValue=В процессе}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Начало" Width="0.1*" Binding="{Binding Path=WorkStartDate}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Конец" Width="0.1*" Binding="{Binding Path=WorkFinishDate, TargetNullValue=В процессе}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Стоимость" Width="0.1*" Binding="{Binding Path=Cost}" IsReadOnly="True"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </StackPanel>
-        <Button Grid.Row="2" Grid.Column="0" Name ="btnDigram" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding ShowDiagramWindow}"
+            
+            <!--Постраничный просмотр-->
+            <WrapPanel Grid.Row="2" Grid.Column="0" Margin="0,10,0,0">
+                <Button Width="20" Content="&#60;" Margin="10,0,10,0" Command="{Binding ToPrevPage}"/>
+                <TextBlock>Страница&#160;</TextBlock>
+                <TextBlock Text="{Binding CurrentPageNum}"></TextBlock>
+                <TextBlock>&#160;из&#160;</TextBlock>
+                <TextBlock Text="{Binding TotalPages}" ></TextBlock>
+                <Button Width="20" Content="&#62;" Margin="10,0,10,0" Command="{Binding ToNextPage}"/>
+
+                <TextBlock>Записей на странице:&#160;</TextBlock>
+                <numeric:IntBox Margin="10, 0,0,0" Width="60" Value="{Binding RecordsPerPage, UpdateSourceTrigger=PropertyChanged}"></numeric:IntBox>
+            </WrapPanel>
+
+        <Button Grid.Row="3" Grid.Column="0" Name ="btnDigram" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding ShowDiagramWindow}"
+                CommandParameter="{Binding ElementName=ManagerWindow}"
                 MinHeight="30" MinWidth="100" Margin="10,10,10,10">Статистика</Button>
     </Grid>
 </Window>

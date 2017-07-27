@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201707172028074_Added id.Designer.cs">
       <DependentUpon>201707172028074_Added id.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707291729400_Decimal Cost.cs" />
+    <Compile Include="Migrations\201707291729400_Decimal Cost.Designer.cs">
+      <DependentUpon>201707291729400_Decimal Cost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707172028074_Added id.resx">
       <DependentUpon>201707172028074_Added id.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707291729400_Decimal Cost.resx">
+      <DependentUpon>201707291729400_Decimal Cost.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
