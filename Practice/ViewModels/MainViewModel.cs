@@ -151,7 +151,7 @@ namespace CarServiceData
         /// <param name="owner"></param>
         private void DoShowDiagramWindow(object owner)
         {
-            DiagramWindow dw = new DiagramWindow();
+            DiagramWindow dw = new DiagramWindow(Orders);
             dw.Owner = (System.Windows.Window)owner; //Чтобы окно закрывалось при закрытии главной формы
             dw.Show();
         }

@@ -4,27 +4,76 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Practice"
+        xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
         Title="Статистика" MinHeight="500" MinWidth="500">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition Height="400"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="88*"></ColumnDefinition>
-            <ColumnDefinition Width="123*"/>
-            <ColumnDefinition Width="181*"/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,10,0,0">Тип диаграммы:</TextBlock>
-        <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" SelectedIndex="0" Margin="10,10,0,0" Grid.ColumnSpan="2" Height="22" Width="91">
-            <ComboBoxItem>Столбчатая</ComboBoxItem>
-            <ComboBoxItem>Круговая</ComboBoxItem>
-            <ComboBoxItem>График</ComboBoxItem>
-        </ComboBox>
 
-        <!--Тут будет график-->
+        <WrapPanel Grid.Row="0" Grid.Column="0">
+            <TextBlock Margin="5,10,0,0">Тип диаграммы:</TextBlock>
+            <ComboBox SelectedIndex="{Binding SelectedChartType}" Margin="10,10,0,0" Height="22" Width="91">
+                <ComboBoxItem>Столбчатая</ComboBoxItem>
+                <ComboBoxItem>Круговая</ComboBoxItem>
+                <ComboBoxItem>График</ComboBoxItem>
+            </ComboBox>
+            
+            <TextBlock Margin="5,10,0,0">Тип графика:</TextBlock>
+            <ComboBox SelectedIndex="{Binding SelectedStatIndex}" 
+                      Margin="10,10,0,0" Height="22" Width="91">
+                <ComboBoxItem>По маркам</ComboBoxItem>
+                <ComboBoxItem>Заказы по месяцам</ComboBoxItem>
+                <ComboBoxItem>Заказы по стоимости</ComboBoxItem>
+            </ComboBox>
+        </WrapPanel>
 
+
+        <!--Графики-->
+        <StackPanel Grid.Row="1">
+            <DVC:Chart Canvas.Top="80" Canvas.Left="10" Name="ColumnChart"
+                 Width="600" Height="250"
+                 Background="LightSteelBlue"
+                       Visibility="{Binding ColumnVisible}">
+                <DVC:Chart.Series>
+                    <DVC:ColumnSeries 
+                        Title="Количество"
+                        ItemsSource="{Binding Stats}"
+                        IndependentValueBinding="{Binding Path=Key}"
+                        DependentValueBinding="{Binding Path=Value}">
+                    </DVC:ColumnSeries>
+                </DVC:Chart.Series>
+            </DVC:Chart>
+            <DVC:Chart Canvas.Top="80" Canvas.Left="10" Name="PieChart"
+                       Width="600" Height="250"
+                       Background="LightSteelBlue"
+                       Visibility="{Binding PieVisible}">
+                <DVC:Chart.Series>
+                    <DVC:PieSeries 
+                        ItemsSource="{Binding Stats}"
+                        IndependentValueBinding="{Binding Path=Key}"
+                        DependentValueBinding="{Binding Path=Value}"
+                        Visibility="Visible">
+                    </DVC:PieSeries>
+                </DVC:Chart.Series>
+            </DVC:Chart>
+            <DVC:Chart Canvas.Top="80" Canvas.Left="10" Name="LineChart"
+                 Width="600" Height="250"
+                 Background="LightSteelBlue"
+                 Visibility="{Binding LineVisible}">
+                <DVC:Chart.Series>
+                    <DVC:LineSeries  
+                        Title="Количество"
+                        ItemsSource="{Binding Stats}"
+                        IndependentValueBinding="{Binding Path=Key}"
+                        DependentValueBinding="{Binding Path=Value}"
+                        Visibility="Visible">
+                    </DVC:LineSeries>
+                </DVC:Chart.Series>
+            </DVC:Chart>
+        </StackPanel>
     </Grid>
 </Window>

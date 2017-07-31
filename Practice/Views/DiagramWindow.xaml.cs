@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CarServiceData;
+using Practice.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +25,12 @@ namespace Practice
         public DiagramWindow()
         {
             InitializeComponent();
+        }
+
+        public DiagramWindow(ObservableCollection<Order> info)
+        {
+            InitializeComponent();
+            DataContext = new StatisticsViewModel(info);
         }
     }
 }
