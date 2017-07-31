@@ -64,11 +64,11 @@ namespace Practice.ViewModels
         /// <summary>
         /// Видимость столбчатой диаграммы
         /// </summary>
-        Visibility columnVisible = Visibility.Collapsed;
+        Visibility columnVisible = Visibility.Visible;
         /// <summary>
         /// Видимость круговой диаграммы
         /// </summary>
-        Visibility pieVisible = Visibility.Collapsed;
+        Visibility pieVisible = Visibility.Visible;
         /// <summary>
         /// Видимость линейной диаграммы
         /// </summary>

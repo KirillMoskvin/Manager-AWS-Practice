@@ -11,7 +11,7 @@
         xmlns:numeric="http://gu.se/NumericInput"
         mc:Ignorable="d"
         Title="Рабочее место менеджера" MinHeight="600" MinWidth="800">
-    <Grid ShowGridLines="True">
+    <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
