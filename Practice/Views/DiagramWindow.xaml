@@ -17,7 +17,7 @@
 
         <WrapPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Margin="5,10,0,0">Тип диаграммы:</TextBlock>
-            <ComboBox SelectedIndex="{Binding SelectedChartType}" Margin="10,10,0,0" Height="22" Width="91">
+            <ComboBox SelectedIndex="{Binding SelectedChartType}" Margin="10,10,0,0" Height="22" Width="91" >
                 <ComboBoxItem>Столбчатая</ComboBoxItem>
                 <ComboBoxItem>Круговая</ComboBoxItem>
                 <ComboBoxItem>График</ComboBoxItem>
